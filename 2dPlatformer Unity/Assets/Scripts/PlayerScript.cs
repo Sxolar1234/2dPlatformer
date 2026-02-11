@@ -4,8 +4,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerScript : MonoBehaviour
 {
-    [SerializeField] private float speed = 15f;
-    [SerializeField] private float jumpForce = 10f;
+    [SerializeField] private float speed = 20f;
+    [SerializeField] private float jumpForce = 100f;
     [SerializeField] private SpriteRenderer spriteRenderer;
     
     public Animator animator;
@@ -68,7 +68,7 @@ public class PlayerScript : MonoBehaviour
     {
         if(Keyboard.current.spaceKey.isPressed && ridgidbody2D.linearVelocity.y == 0) // Überprüfen, ob die Leertaste gedrückt wird und der Spieler auf dem Boden ist
         {
-            ridgidbody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse); // Spieler nach oben springen lassen
+            ridgidbody2D.linearVelocity = new Vector2(ridgidbody2D.linearVelocity.x, jumpForce); // Spieler nach oben springen lassen
         }
     }
 
