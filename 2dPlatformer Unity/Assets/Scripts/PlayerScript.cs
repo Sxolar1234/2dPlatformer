@@ -4,13 +4,17 @@ using UnityEngine.InputSystem;
 
 public class PlayerScript : MonoBehaviour
 {
-    [SerializeField] private float speed = 15f;
-    [SerializeField] private float jumpForce = 10f;
+    [SerializeField] private float speed = 20f;
+    [SerializeField] private float jumpForce = 100f;
     [SerializeField] private SpriteRenderer spriteRenderer;
+    
+    public Animator animator;
     public Rigidbody2D ridgidbody2D;
     public Vector2 screenBounce;
     private float playerHalfWidth;
     private float playerHalfHeight;
+
+   
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -19,6 +23,7 @@ public class PlayerScript : MonoBehaviour
         screenBounce = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height)); //Größe des Bildschirms bekommen
         playerHalfWidth = GetComponent<SpriteRenderer>().bounds.extents.x; //Halbe Breite des Spielers bekommen
         playerHalfHeight = GetComponent<SpriteRenderer>().bounds.extents.y; //Halbe Höhe des Spielers bekommen
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -31,19 +36,24 @@ public class PlayerScript : MonoBehaviour
 
     public void movement()
     {
-       if(Keyboard.current.aKey.isPressed)
-       {
+       if(Keyboard.current.aKey.isPressed && !Keyboard.current.dKey.isPressed)
+       {    
+            animator.SetBool("isRunning", true); // Laufanimation starten
             ridgidbody2D.linearVelocity = new Vector2(-speed, ridgidbody2D.linearVelocity.y);
             spriteRenderer.flipX = true; // Spieler nach links drehen
        }
-       else if(Keyboard.current.dKey.isPressed)
-       {
+       if(Keyboard.current.dKey.isPressed && !Keyboard.current.aKey.isPressed)
+       {    
+            animator.SetBool("isRunning", true); // Laufanimation starten
             ridgidbody2D.linearVelocity = new Vector2(speed, ridgidbody2D.linearVelocity.y);
             spriteRenderer.flipX = false; // Spieler nach rechts drehen
        }
-       else
+       
+       if(!Keyboard.current.aKey.isPressed && !Keyboard.current.dKey.isPressed)
        {
             ridgidbody2D.linearVelocity = new Vector2(0, ridgidbody2D.linearVelocity.y);
+            spriteRenderer.sprite = spriteRenderer.sprite; 
+            animator.SetBool("isRunning", false); // Laufanimation stoppen
        } 
     }
 
@@ -59,7 +69,7 @@ public class PlayerScript : MonoBehaviour
     {
         if(Keyboard.current.spaceKey.isPressed && ridgidbody2D.linearVelocity.y == 0) // Überprüfen, ob die Leertaste gedrückt wird und der Spieler auf dem Boden ist
         {
-            ridgidbody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse); // Spieler nach oben springen lassen
+            ridgidbody2D.linearVelocity = new Vector2(ridgidbody2D.linearVelocity.x, jumpForce); // Spieler nach oben springen lassen
         }
     }
 
