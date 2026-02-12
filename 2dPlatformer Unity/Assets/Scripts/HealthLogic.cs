@@ -8,9 +8,9 @@ public class HealthLogic : MonoBehaviour
     
 
     [ContextMenu("Take Damage")]
-    public void TakeDamage()
+    public void TakeDamage(float pDamage = 20f)
     {
-        healthAmount -= 20; 
+        healthAmount -= pDamage; 
         healthBar.fillAmount = healthAmount / 100f; // Aktualisiere die Gesundheitsleiste
         if (healthAmount <= 0)
         {

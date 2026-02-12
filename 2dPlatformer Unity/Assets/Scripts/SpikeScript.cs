@@ -14,7 +14,7 @@ public class SpikeScript : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("player"))
         {
-            health.TakeDamage();
+            health.TakeDamage(20);
             launchPlayer();
         }
     }

@@ -17,6 +17,6 @@ public class logicScript : MonoBehaviour
     {
         score++;
         Debug.Log("Score added: " + score);
-        scoreText.text = "Score: " + score; // Aktualisiere den Score-Text
+        scoreText.text = "White Monster: " + score; // Aktualisiere den Score-Text
     }
 }
