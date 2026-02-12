@@ -1,22 +1,10 @@
 fileFormatVersion: 2
-<<<<<<<< Updated upstream:2dPlatformer Unity/Assets/Images/Bar.png.meta
-guid: 42bf83c5444c6ed4383980d6de89d73f
+guid: 880b05a855a23d749b03fb0ab0fa813b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3737897332693287829
-    second: Bar_0
-========
-guid: e949b4621efac344eb6e33774354ef9a
-TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: 1378253701732242962
-    second: lauf_5_0
-  - first:
-      213: 849836135968056518
-    second: lauf_5_1
->>>>>>>> Stashed changes:2dPlatformer Unity/Assets/Images/Run/lauf_5.png.meta
+      213: 4299890612834196519
+    second: Idel Einatmen_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -151,49 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-<<<<<<<< Updated upstream:2dPlatformer Unity/Assets/Images/Bar.png.meta
-      name: Bar_0
+      name: Idel Einatmen_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 52
-        height: 9
-========
-      name: lauf_5_0
-      rect:
-        serializedVersion: 2
-        x: 111
-        y: 271
-        width: 10
-        height: 10
->>>>>>>> Stashed changes:2dPlatformer Unity/Assets/Images/Run/lauf_5.png.meta
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-<<<<<<<< Updated upstream:2dPlatformer Unity/Assets/Images/Bar.png.meta
-      spriteID: 5934012e1ddafd330800000000000000
-      internalID: 3737897332693287829
-========
-      spriteID: 2161e1e707a802310800000000000000
-      internalID: 1378253701732242962
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: lauf_5_1
-      rect:
-        serializedVersion: 2
-        x: 119
+        x: 151
         y: 0
         width: 186
-        height: 481
+        height: 505
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -202,9 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 6c4aaa986793bcb00800000000000000
-      internalID: 849836135968056518
->>>>>>>> Stashed changes:2dPlatformer Unity/Assets/Images/Run/lauf_5.png.meta
+      spriteID: 72cd4070bb74cab30800000000000000
+      internalID: 4299890612834196519
       vertices: []
       indices: 
       edges: []
@@ -223,12 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-<<<<<<<< Updated upstream:2dPlatformer Unity/Assets/Images/Bar.png.meta
-      Bar_0: 3737897332693287829
-========
-      lauf_5_0: 1378253701732242962
-      lauf_5_1: 849836135968056518
->>>>>>>> Stashed changes:2dPlatformer Unity/Assets/Images/Run/lauf_5.png.meta
+      Idel Einatmen_0: 4299890612834196519
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
