@@ -12,6 +12,11 @@ public class logicScript : MonoBehaviour
         
     }
 
+    public int getScore()
+    {
+        return score;
+    }
+
     [ContextMenu("Add Score")]
     public void addScore()
     {
