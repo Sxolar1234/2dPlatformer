@@ -36,19 +36,20 @@ public class PlayerScript : MonoBehaviour
 
     public void movement()
     {
-       if(Keyboard.current.aKey.isPressed)
+       if(Keyboard.current.aKey.isPressed && !Keyboard.current.dKey.isPressed)
        {    
             animator.SetBool("isRunning", true); // Laufanimation starten
             ridgidbody2D.linearVelocity = new Vector2(-speed, ridgidbody2D.linearVelocity.y);
             spriteRenderer.flipX = true; // Spieler nach links drehen
        }
-       else if(Keyboard.current.dKey.isPressed)
+       if(Keyboard.current.dKey.isPressed && !Keyboard.current.aKey.isPressed)
        {    
             animator.SetBool("isRunning", true); // Laufanimation starten
             ridgidbody2D.linearVelocity = new Vector2(speed, ridgidbody2D.linearVelocity.y);
             spriteRenderer.flipX = false; // Spieler nach rechts drehen
        }
-       else
+       
+       if(!Keyboard.current.aKey.isPressed && !Keyboard.current.dKey.isPressed)
        {
             ridgidbody2D.linearVelocity = new Vector2(0, ridgidbody2D.linearVelocity.y);
             spriteRenderer.sprite = spriteRenderer.sprite; 
