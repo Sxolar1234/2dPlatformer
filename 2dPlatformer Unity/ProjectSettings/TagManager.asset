@@ -7,7 +7,9 @@ TagManager:
   - collectable
   - logic
   - whiteMonster
-  - Score
+  - spike
+  - health
+  - player
   layers:
   - Default
   - TransparentFX
@@ -16,7 +18,7 @@ TagManager:
   - Water
   - UI
   - Ground
-  - 
+  - Obstacles
   - 
   - 
   - 

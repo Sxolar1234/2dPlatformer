@@ -2,15 +2,25 @@ using UnityEngine;
 
 public class SpikeScript : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public HealthLogic health;
+    public Rigidbody2D playerRigidbody;
     void Start()
     {
-        
+       health = GameObject.FindWithTag("health").GetComponent<HealthLogic>(); 
+       playerRigidbody = GameObject.FindWithTag("player").GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        
+        if(collision.gameObject.CompareTag("player"))
+        {
+            health.TakeDamage();
+            launchPlayer();
+        }
+    }
+
+    public void launchPlayer()
+    {
+        playerRigidbody.linearVelocity = new Vector2(0, 10); 
     }
 }

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthlLogic : MonoBehaviour
+public class HealthLogic : MonoBehaviour
 {
     private float healthAmount = 100f;
     public Image healthBar;
