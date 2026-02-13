@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 580321211107021383}
   - component: {fileID: 4851445374047439839}
   - component: {fileID: 8259534750238793126}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Plat_mov
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,13 +105,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80b147267a36f7e4fb853d18ce0494e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  unlockedTangential: 1
+  unlocked: 0
+  firstMove: 0
+  isPlayerOnPlatform: 0
   platformName: Platform X + Y
   maxPosX: 10
   maxPosY: 10
   speed: 5
   scoreREQ: 20
   monster_tax: 1
+  transformPlayer: {fileID: 0}
   info: {fileID: 0}
   logic: {fileID: 0}
   boxCollider: {fileID: 8259534750238793126}

@@ -17,13 +17,15 @@ public class Platform_mov_Tangential : MonoBehaviour
     private string purpose = "none";
     private bool platformWait = false;
 
+    [SerializeField]private bool isPlayerOnPlatform = false;
     [SerializeField] private string platformName = "Platform...";
     [SerializeField] private float maxPosX = 10f;
     [SerializeField] private float maxPosY = 10f;
     [SerializeField] private float speed = 5f;
     [SerializeField] private int scoreREQ = 20;
-    [SerializeField] private int monster_tax = 1;
+    [SerializeField] private int monster_tax = 5;
 
+    public Transform transformPlayer;
     public Text info;
     public logicScript logic;
     public BoxCollider2D boxCollider;
@@ -34,7 +36,7 @@ public class Platform_mov_Tangential : MonoBehaviour
     {
         startPosX = transform.position.x;
         startPosY = transform.position.y;
-
+        transformPlayer = GameObject.FindWithTag("player").GetComponent<Transform>();
         info = GameObject.FindWithTag("info").GetComponent<Text>();
         logic = GameObject.FindWithTag("logic").GetComponent<logicScript>();
     }
@@ -62,7 +64,11 @@ public class Platform_mov_Tangential : MonoBehaviour
         {
             transform.Translate(Vector2.up * speed * Time.deltaTime);
             transform.Translate(Vector2.right * speed * Time.deltaTime);
-
+            if (isPlayerOnPlatform)
+            {
+                transformPlayer.Translate(Vector2.up * speed * Time.deltaTime);
+                transformPlayer.Translate(Vector2.right * speed * Time.deltaTime);
+            }
             if (transform.position.x >= startPosX + maxPosX && transform.position.y >= startPosY + maxPosY)
             {
                 GoingUpOrRight = false;
@@ -75,7 +81,11 @@ public class Platform_mov_Tangential : MonoBehaviour
             transform.Translate(Vector2.down * speed * Time.deltaTime);
             transform.Translate(Vector2.left * speed * Time.deltaTime);
 
-
+            if (isPlayerOnPlatform)
+            {
+                transformPlayer.Translate(Vector2.down * speed * Time.deltaTime);
+                transformPlayer.Translate(Vector2.left * speed * Time.deltaTime);
+            }
             if (transform.position.x <= startPosX && transform.position.y <= startPosY)
             {
                 GoingUpOrRight = true;
@@ -94,6 +104,7 @@ public class Platform_mov_Tangential : MonoBehaviour
 
     public void OnCollisionEnter2D(Collision2D collision)
     {
+        isPlayerOnPlatform = true;
         if (!tax_collected && unlocked && collision.gameObject.CompareTag("player"))
         {
             logic.setScore(logic.getScore() - monster_tax);
@@ -108,6 +119,11 @@ public class Platform_mov_Tangential : MonoBehaviour
             info.text = "You need " + (scoreREQ - logic.getScore()) + " more";
             initTimer(5f,"closeInfo");
         }
+    }
+
+    public void OnCollisionExit2D(Collision2D collision)
+    {
+        isPlayerOnPlatform = false;
     }
 
     public void allTimers()

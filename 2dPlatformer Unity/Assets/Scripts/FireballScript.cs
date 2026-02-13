@@ -5,6 +5,7 @@ public class FireballScript : MonoBehaviour
 
     public HealthLogic health;
     public logicScript logic;
+    [SerializeField]private float speed = 35f;
     public bool triggered = false;
 
     void Awake()
@@ -17,7 +18,7 @@ public class FireballScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (triggered) { transform.Translate(Vector2.left * Time.deltaTime * 5f); }
+        if (triggered) { transform.Translate(Vector2.left * Time.deltaTime * speed); }
 
 
     }

@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -29,6 +30,8 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+        
         movement();
         //ScreenBounce();
         jump();
@@ -39,13 +42,13 @@ public class PlayerScript : MonoBehaviour
        if(Keyboard.current.aKey.isPressed && !Keyboard.current.dKey.isPressed)
        {    
             animator.SetBool("isRunning", true); // Laufanimation starten
-            ridgidbody2D.linearVelocity = new Vector2(-speed, ridgidbody2D.linearVelocity.y);
+            ridgidbody2D.linearVelocity = new Vector3(-speed, ridgidbody2D.linearVelocity.y, 0);
             spriteRenderer.flipX = true; // Spieler nach links drehen
        }
        if(Keyboard.current.dKey.isPressed && !Keyboard.current.aKey.isPressed)
        {    
             animator.SetBool("isRunning", true); // Laufanimation starten
-            ridgidbody2D.linearVelocity = new Vector2(speed, ridgidbody2D.linearVelocity.y);
+            ridgidbody2D.linearVelocity = new Vector3(speed, ridgidbody2D.linearVelocity.y, 0);
             spriteRenderer.flipX = false; // Spieler nach rechts drehen
        }
        
@@ -67,16 +70,16 @@ public class PlayerScript : MonoBehaviour
 
     public void jump()
     {
-        if(Keyboard.current.spaceKey.isPressed && ridgidbody2D.linearVelocity.y == 0) // Überprüfen, ob die Leertaste gedrückt wird und der Spieler auf dem Boden ist
+        if(Keyboard.current.spaceKey.isPressed && isGrounded()) // Überprüfen, ob die Leertaste gedrückt wird und der Spieler auf dem Boden ist
         {
-            ridgidbody2D.linearVelocity = new Vector2(ridgidbody2D.linearVelocity.x, jumpForce); // Spieler nach oben springen lassen
+            ridgidbody2D.linearVelocity = new Vector3(ridgidbody2D.linearVelocity.x, jumpForce,0); // Spieler nach oben springen lassen
         }
     }
 
     public bool isGrounded()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, playerHalfHeight + 0.1f, LayerMask.GetMask("Ground")); // Raycast nach unten senden, um zu überprüfen, ob der Spieler den Boden berührt
-        return hit.collider != null; // Rückgabe true, wenn der Raycast ein Kollisionsobjekt trifft
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, playerHalfHeight + 0.1f, LayerMask.GetMask("Ground")); 
+        return hit.collider != null;
     }
    
 }
