@@ -11,6 +11,7 @@ TagManager:
   - health
   - player
   - info
+  - fireball
   layers:
   - Default
   - TransparentFX

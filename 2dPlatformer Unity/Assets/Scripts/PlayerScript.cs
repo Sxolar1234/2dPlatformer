@@ -30,7 +30,7 @@ public class PlayerScript : MonoBehaviour
     void Update()
     {
         movement();
-        ScreenBounce();
+        //ScreenBounce();
         jump();
     }
 

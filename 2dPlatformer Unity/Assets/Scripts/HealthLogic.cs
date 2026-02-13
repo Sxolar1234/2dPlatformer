@@ -1,16 +1,17 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class HealthLogic : MonoBehaviour
 {
     private float healthAmount = 100f;
     public Image healthBar;
-    
+
 
     [ContextMenu("Take Damage")]
     public void TakeDamage(float pDamage = 20f)
     {
-        healthAmount -= pDamage; 
+        healthAmount -= pDamage;
         healthBar.fillAmount = healthAmount / 100f; // Aktualisiere die Gesundheitsleiste
         if (healthAmount <= 0)
         {
@@ -20,7 +21,8 @@ public class HealthLogic : MonoBehaviour
 
     public void Die()
     {
-        Debug.Log("Player died!"); // Hier kannst du weitere Aktionen hinzufügen, z.B. Neustart des Levels
+        Debug.Log("Player died!");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void Heal(int healAmount)

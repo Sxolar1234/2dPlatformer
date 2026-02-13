@@ -67,7 +67,7 @@ public class Platform_mov_Tangential : MonoBehaviour
             {
                 GoingUpOrRight = false;
                 platformWait = true;
-                initTimer(2f, true, "platformWait");
+                initTimer(2f, "platformWait");
             }
         }
         else
@@ -81,7 +81,7 @@ public class Platform_mov_Tangential : MonoBehaviour
                 GoingUpOrRight = true;
                 if (!firstMove)
                 {
-                    initTimer(2f, true, "platformWait");
+                    initTimer(2f, "platformWait");
                     platformWait = true;
                 }
                 firstMove = false;
@@ -101,12 +101,12 @@ public class Platform_mov_Tangential : MonoBehaviour
             spriteRenderer.color = Color.white;
             info.text = "-"+monster_tax+" White Monsters";
             firstMove = true;
-            initTimer(1f, true, "closeInfo");
+            initTimer(1f, "closeInfo");
         }
         else if (!unlocked && collision.gameObject.CompareTag("player"))
         {
             info.text = "You need " + (scoreREQ - logic.getScore()) + " more";
-            initTimer(5f, true, "closeInfo");
+            initTimer(5f,"closeInfo");
         }
     }
 
@@ -119,6 +119,8 @@ public class Platform_mov_Tangential : MonoBehaviour
                 break;
             case "platformWait":
                 timerWaitPlatform();
+                break;
+            default:
                 break;
         }
     }
@@ -151,10 +153,10 @@ public class Platform_mov_Tangential : MonoBehaviour
         }
     }
 
-    private void initTimer(float pTime, bool pTimerStarted, string pPurpose)
+    private void initTimer(float pTime, string pPurpose)
     {
         time = pTime;
-        timerStarted = pTimerStarted;
+        timerStarted = true;
         purpose = pPurpose;
     }
 
