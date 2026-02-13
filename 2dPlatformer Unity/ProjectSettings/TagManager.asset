@@ -10,6 +10,7 @@ TagManager:
   - spike
   - health
   - player
+  - info
   layers:
   - Default
   - TransparentFX
