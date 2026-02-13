@@ -11,17 +11,26 @@ public class logicScript : MonoBehaviour
     {
         
     }
+    
+    void Update()
+    {
+        scoreText.text = "White Monster: " + score;
+    }
 
     public int getScore()
     {
         return score;
     }
 
+    public void setScore(int pScore)
+    {
+        score = pScore;
+    }
+
+
     [ContextMenu("Add Score")]
     public void addScore()
     {
         score++;
-        Debug.Log("Score added: " + score);
-        scoreText.text = "White Monster: " + score; // Aktualisiere den Score-Text
     }
 }

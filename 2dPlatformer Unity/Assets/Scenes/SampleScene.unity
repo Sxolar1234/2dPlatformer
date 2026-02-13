@@ -726,6 +726,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Platform_mov
   maxPos: 10
   speed: 5
+  scoreREQ: 1
+  monster_tax: 1
+  logic: {fileID: 0}
+  boxCollider: {fileID: 1350485411}
 --- !u!212 &1350485413
 SpriteRenderer:
   serializedVersion: 2
@@ -1217,8 +1221,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62e27bb475d17cf4a832c7bd53ed1d60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  speed: 9
-  jumpForce: 10
+  speed: 20
+  jumpForce: 40
   spriteRenderer: {fileID: 1773349445}
   animator: {fileID: 0}
   ridgidbody2D: {fileID: 1773349443}
@@ -1253,7 +1257,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 2
+  m_GravityScale: 9.81
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class Platform_mov : MonoBehaviour
 {
@@ -8,9 +9,13 @@ public class Platform_mov : MonoBehaviour
 
     [SerializeField] private float maxPos = 10f;
     [SerializeField] private float speed = 5f;
-    [SerializeField] private int scoreREQ = 1;
-    //public Text anzahl; 
+    [SerializeField] private int scoreREQ = 5;
+    [SerializeField] private int monster_tax = 1;
+    [SerializeField] private bool tax_collected = false;
+
+    //public Text anzahl;
     public logicScript logic;
+    public BoxCollider2D boxCollider;
 
     void Start()
     {
@@ -20,13 +25,13 @@ public class Platform_mov : MonoBehaviour
     }
 
     void Update()
-    { 
+    {
         if (logic.getScore() >= scoreREQ)
-        { 
-        platform_mov();
+        {
+            platform_mov();
         }
     }
-    
+
     private void platform_mov()
     {
         if (goingUp)
@@ -44,4 +49,16 @@ public class Platform_mov : MonoBehaviour
                 goingUp = true;
         }
     }
+
+
+   
+
+   public void OnCollisionEnter2D(Collision2D collision)
+   {
+      if (collision.gameObject.CompareTag("player") && !tax_collected)
+      {
+          logic.setScore(logic.getScore() - monster_tax);
+          tax_collected = true;
+      }
+   }
 }
