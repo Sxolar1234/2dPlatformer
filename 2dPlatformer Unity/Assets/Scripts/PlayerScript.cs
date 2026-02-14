@@ -6,11 +6,13 @@ using UnityEngine.InputSystem;
 public class PlayerScript : MonoBehaviour
 {
     [SerializeField] private float speed = 20f;
-    [SerializeField] private float jumpForce = 100f;
+    [SerializeField] private float jumpForce = 40f;
     [SerializeField] private SpriteRenderer spriteRenderer;
+    private Vector3 movementPlayer;
+    public bool isGroundedNigga;
     
     public Animator animator;
-    public Rigidbody2D ridgidbody2D;
+    public Rigidbody2D rigidbody2D;
     public Vector2 screenBounce;
     private float playerHalfWidth;
     private float playerHalfHeight;
@@ -19,9 +21,8 @@ public class PlayerScript : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        ridgidbody2D = GetComponent<Rigidbody2D>();
+        rigidbody2D = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        screenBounce = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height)); //Größe des Bildschirms bekommen
         playerHalfWidth = GetComponent<SpriteRenderer>().bounds.extents.x; //Halbe Breite des Spielers bekommen
         playerHalfHeight = GetComponent<SpriteRenderer>().bounds.extents.y; //Halbe Höhe des Spielers bekommen
         animator = GetComponent<Animator>();
@@ -31,9 +32,8 @@ public class PlayerScript : MonoBehaviour
     void Update()
     {
         
-        
+        isGroundedNigga = isGrounded();
         movement();
-        //ScreenBounce();
         jump();
     }
 
@@ -41,38 +41,31 @@ public class PlayerScript : MonoBehaviour
     {
        if(Keyboard.current.aKey.isPressed && !Keyboard.current.dKey.isPressed)
        {    
-            animator.SetBool("isRunning", true); // Laufanimation starten
-            ridgidbody2D.linearVelocity = new Vector3(-speed, ridgidbody2D.linearVelocity.y, 0);
-            spriteRenderer.flipX = true; // Spieler nach links drehen
+            animator.SetBool("isRunning", true); 
+            movementPlayer.x = -speed * Time.deltaTime;
+            spriteRenderer.flipX = true; 
        }
        if(Keyboard.current.dKey.isPressed && !Keyboard.current.aKey.isPressed)
        {    
-            animator.SetBool("isRunning", true); // Laufanimation starten
-            ridgidbody2D.linearVelocity = new Vector3(speed, ridgidbody2D.linearVelocity.y, 0);
-            spriteRenderer.flipX = false; // Spieler nach rechts drehen
+            animator.SetBool("isRunning", true); 
+            movementPlayer.x = speed * Time.deltaTime;
+            spriteRenderer.flipX = false; 
        }
        
        if(!Keyboard.current.aKey.isPressed && !Keyboard.current.dKey.isPressed)
        {
-            ridgidbody2D.linearVelocity = new Vector2(0, ridgidbody2D.linearVelocity.y);
             spriteRenderer.sprite = spriteRenderer.sprite; 
-            animator.SetBool("isRunning", false); // Laufanimation stoppen
+            movementPlayer.x = 0;
+            animator.SetBool("isRunning", false); 
        } 
-    }
-
-    public void ScreenBounce()
-    {
-        float clampedX = Mathf.Clamp(transform.position.x, -screenBounce.x + playerHalfWidth, screenBounce.x - playerHalfWidth); //Spieler innerhalb der Bildschirmgrenzen halten
-        Vector2 pos = transform.position;
-        pos.x = clampedX;
-        transform.position = pos;
+        transform.Translate(movementPlayer);
     }
 
     public void jump()
     {
         if(Keyboard.current.spaceKey.isPressed && isGrounded()) // Überprüfen, ob die Leertaste gedrückt wird und der Spieler auf dem Boden ist
         {
-            ridgidbody2D.linearVelocity = new Vector3(ridgidbody2D.linearVelocity.x, jumpForce,0); // Spieler nach oben springen lassen
+            rigidbody2D.linearVelocityY = jumpForce;
         }
     }
 

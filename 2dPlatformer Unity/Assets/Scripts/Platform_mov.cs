@@ -1,3 +1,4 @@
+using System.Numerics;
 using System.Threading;
 using Unity.Mathematics;
 using UnityEngine;
@@ -6,9 +7,11 @@ using UnityEngine.UIElements;
 
 public class Platform_mov_Tangential : MonoBehaviour
 {
-    private float startPosX;
-    private float startPosY;
-    private bool GoingUpOrRight = false;
+    private UnityEngine.Vector2 startPos;
+    private UnityEngine.Vector2 targetPos;
+    private bool forward = true;
+    private float speedX;
+    private float speedY;
     private bool tax_collected = false;
     public bool unlocked = false;
     public bool firstMove = false;
@@ -16,12 +19,13 @@ public class Platform_mov_Tangential : MonoBehaviour
     private bool timerStarted = false;
     private string purpose = "none";
     private bool platformWait = false;
+    private bool isPlayerOnPlatform = false;
 
-    [SerializeField]private bool isPlayerOnPlatform = false;
+
     [SerializeField] private string platformName = "Platform...";
     [SerializeField] private float maxPosX = 10f;
     [SerializeField] private float maxPosY = 10f;
-    [SerializeField] private float speed = 5f;
+    [SerializeField] private float speed = 20f;
     [SerializeField] private int scoreREQ = 20;
     [SerializeField] private int monster_tax = 5;
 
@@ -34,8 +38,10 @@ public class Platform_mov_Tangential : MonoBehaviour
 
     void Start()
     {
-        startPosX = transform.position.x;
-        startPosY = transform.position.y;
+        startPos = transform.position;
+        targetPos = startPos + new UnityEngine.Vector2(maxPosX, maxPosY);
+        speedX = maxPosX / speed * speed;
+        speedY = maxPosY / speed * speed;
         transformPlayer = GameObject.FindWithTag("player").GetComponent<Transform>();
         info = GameObject.FindWithTag("info").GetComponent<Text>();
         logic = GameObject.FindWithTag("logic").GetComponent<logicScript>();
@@ -57,48 +63,37 @@ public class Platform_mov_Tangential : MonoBehaviour
 
         allTimers();
     }
-    
+
     private void platform_mov()
     {
-        if (GoingUpOrRight)
+        UnityEngine.Vector2 target;
+
+        if (forward)
         {
-            transform.Translate(Vector2.up * speed * Time.deltaTime);
-            transform.Translate(Vector2.right * speed * Time.deltaTime);
-            if (isPlayerOnPlatform)
-            {
-                transformPlayer.Translate(Vector2.up * speed * Time.deltaTime);
-                transformPlayer.Translate(Vector2.right * speed * Time.deltaTime);
-            }
-            if (transform.position.x >= startPosX + maxPosX && transform.position.y >= startPosY + maxPosY)
-            {
-                GoingUpOrRight = false;
-                platformWait = true;
-                initTimer(2f, "platformWait");
-            }
+            target = targetPos;
         }
         else
         {
-            transform.Translate(Vector2.down * speed * Time.deltaTime);
-            transform.Translate(Vector2.left * speed * Time.deltaTime);
-
-            if (isPlayerOnPlatform)
-            {
-                transformPlayer.Translate(Vector2.down * speed * Time.deltaTime);
-                transformPlayer.Translate(Vector2.left * speed * Time.deltaTime);
-            }
-            if (transform.position.x <= startPosX && transform.position.y <= startPosY)
-            {
-                GoingUpOrRight = true;
-                if (!firstMove)
-                {
-                    initTimer(2f, "platformWait");
-                    platformWait = true;
-                }
-                firstMove = false;
-
-            }
+            target = startPos;
         }
 
+        transform.position = UnityEngine.Vector2.MoveTowards(transform.position, target, speed * Time.deltaTime);
+
+        if (isPlayerOnPlatform)
+        {
+            transformPlayer.position = UnityEngine.Vector2.MoveTowards(
+                transformPlayer.position,
+                target + (UnityEngine.Vector2)(transformPlayer.position - transform.position),
+                speed * Time.deltaTime
+            );
+        }
+
+        if (UnityEngine.Vector2.Distance(transform.position, target) < 0.01f)
+        {
+            forward = !forward;
+            platformWait = true;
+            initTimer(2f, "platformWait");
+        }
 
     }
 
@@ -110,14 +105,14 @@ public class Platform_mov_Tangential : MonoBehaviour
             logic.setScore(logic.getScore() - monster_tax);
             tax_collected = true;
             spriteRenderer.color = Color.white;
-            info.text = "-"+monster_tax+" White Monsters";
+            info.text = "-" + monster_tax + " White Monsters";
             firstMove = true;
             initTimer(1f, "closeInfo");
         }
         else if (!unlocked && collision.gameObject.CompareTag("player"))
         {
             info.text = "You need " + (scoreREQ - logic.getScore()) + " more";
-            initTimer(5f,"closeInfo");
+            initTimer(5f, "closeInfo");
         }
     }
 
